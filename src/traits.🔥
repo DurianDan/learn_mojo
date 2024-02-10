@@ -1,0 +1,50 @@
+trait Employee:
+    fn get_position(self) -> String:
+        ...
+    
+    fn get_salary(self) -> Int8:
+        ...
+
+@value
+struct DataEngineer(Employee):
+    var salary: Int8
+
+    fn get_position(self) -> String:
+        return "Data Engineer"
+
+    fn get_salary(self) -> Int8:
+        return self.salary
+
+@value
+struct QualityAssurance(Employee):
+    var salary: Int8
+
+    fn get_position(self) -> String:
+        return "Quality Assurance"
+
+    fn get_salary(self) -> Int8:
+        return self.salary
+
+
+fn compare_salary[E1: Employee, E2: Employee](
+    emp1: E1, emp2: E2
+) -> String:
+    if emp1.get_salary() > emp2.get_salary():
+        return "greater"
+    if emp1.get_salary() < emp2.get_salary():
+        return "smaller"
+    return "equal"
+
+
+fn main():
+    let emp1 = DataEngineer(1000)
+    let emp2 = QualityAssurance(2000)
+
+    print(
+        "Compare the salary of \""
+        + emp1.get_position()
+        + "\" to \""
+        + emp2.get_position()
+        + "\": "
+        + compare_salary[DataEngineer, QualityAssurance](emp1, emp2)
+        )

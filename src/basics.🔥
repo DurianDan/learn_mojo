@@ -12,23 +12,13 @@ fn greet2(name: String) -> String:
     let end_sentence: String = "!"
     return "Hello " + name + end_sentence
 
+
+@value # like pydantic BaseModel, without coding the __init__ function
 struct Employee:
     var name: String
     var salary: Float32
     var age: Int8
     var year_senority: Float16
-
-    fn __init__(
-        inout self,
-        name: String,
-        salary: Float32,
-        age: Int8,
-        year_senority: Float16,
-    ):
-        self.name = name
-        self.salary = salary
-        self.age = age
-        self.year_senority = year_senority
 
     fn compare_salary(
         self,
@@ -46,6 +36,15 @@ struct Employee:
             + ", salary=" + self.salary
             + ", age=" + self.age
             + ", year_senority=" + self.year_senority
+            + ")"
+
+    fn __repr__(self) -> String:
+        return "Employee(" 
+            + "name=" + self.name
+            + ", salary=" + self.salary
+            + ", age=" + self.age
+            + ", year_senority=" + self.year_senority
+            + ")"
 
 fn main():
     let my_name = "Huy"
@@ -57,3 +56,6 @@ fn main():
         "Linh", 100_000.0, 23, 2
     )
     print(emp2.compare_salary(emp1))
+    print(emp2.getstr())
+    print(emp1.getstr())
+    # print(repr(emp1))
